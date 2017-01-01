@@ -216,7 +216,7 @@ with open('./Scraped.csv', 'wb') as csvfile:
 			unprocessedPornstars.append(pornstar +  ' [' + url + ']')
 
 		finally:
-			if name != '': print 'Successfully scraped the following information for ' + name + '[' + url + ']'
+			# if name != '': print 'Successfully scraped the following information for ' + name + '[' + url + ']'
 			# if dateofBirth != '': print '\t' + 'DoB::: ' + dateofBirth
 			# if weight != '': print '\t' + 'Weight::: ' + weight
 			# if height != '': print '\t' + 'Height::: ' + height
@@ -234,7 +234,7 @@ with open('./Scraped.csv', 'wb') as csvfile:
 			# print ''
 			
 			if name != '':
-				print 'Writing... ' + name				
+				print 'Writing... ' + name + '[' + url + ']'			
 				# csvWriter.writerow(['0'] + [name] + [str(date.today())] + [str(date.today())] + [str(date.today())] + [str(date.today())] + ['0'] + [dateofBirth] + ['0'] + ['0'] + ['0'] + [bustSize] + [hairColor] + ['-'] + ['Female'] + [eyeColor] + [ethnicity] + ['1'] + [buttSize] + [nationality] + [careerStartYear] + [careerEndYear] + [height] + [weight])		
 				csvWriter.writerow(['0'] + [name] + [''] + [''] + [''] + [''] + ['0'] + [dateofBirth] + ['0'] + ['0'] + ['0'] + [bustSize] + [hairColor] + [''] + ['Female'] + [eyeColor] + [ethnicity] + ['1'] + [buttSize] + [nationality] + [careerStartYear] + [careerEndYear] + [height] + [weight] + [aliases] + [tattoos] + [piercings])		
 
