@@ -92,15 +92,15 @@ def determineCareerEnd(careerEndDt):
 	else:
 		return ''
 	
-#pornstarList = ['April ONeil', 'Ariana Marie', 'Archana Sharma', 'Kay Parker', 'Janet Mason']
-pornstarList = ['Kay Parker', 'Janet Mason']
+pornstarList = ['April ONeil', 'Ariana Marie', 'Archana Sharma', 'Kay Parker', 'Janet Mason']
+# pornstarList = ['Kay Parker', 'Janet Mason']
 #pornstarList = ['Archana Sharma']
 unprocessedPornstars = []
 
 
 with open('./Scraped.csv', 'wb') as csvfile:
 	csvWriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-	csvWriter.writerow(['Id'] + ['Name'] + ['DateAdded'] + ['DateFavorited'] + ['DateRunnerUpped'] + ['LastWatched'] + ['PlayCount'] + ['BirthDate'] + ['Favorite'] + ['RunnerUp'] + ['Rating'] + ['BreastSize'] + ['HairColor'] + ['Description'] + ['Gender'] + ['EyeColor'] + ['Ethnicity'] + ['Organized'] + ['ButtSize'] + ['Nationality'] + ['StartYear'] + ['EndYear'] + ['Height'] + ['Weight'])
+	csvWriter.writerow(['Id'] + ['Name'] + ['DateAdded'] + ['DateFavorited'] + ['DateRunnerUpped'] + ['LastWatched'] + ['PlayCount'] + ['BirthDate'] + ['Favorite'] + ['RunnerUp'] + ['Rating'] + ['BreastSize'] + ['HairColor'] + ['Description'] + ['Gender'] + ['EyeColor'] + ['Ethnicity'] + ['Organized'] + ['ButtSize'] + ['Nationality'] + ['StartYear'] + ['EndYear'] + ['Height'] + ['Weight'] + ['Aliases'] + ['Tattoos'] + ['Piercings'])
 
 	for pornstar in pornstarList:
 		url = 'http://www.freeones.com/html/' + pornstar[:1] + '_links/bio_' + pornstar.replace(' ','_') + '.php'
@@ -189,19 +189,19 @@ with open('./Scraped.csv', 'wb') as csvfile:
 					#TATTOOS
 					if cellName == 'Tattoos':
 						for cell in row.findAll('td', {'class':'paramvalue'}):
-							cellValue = cell.text.replace('&nbsp;', '').replace(':','')
+							cellValue = cell.text.replace('&nbsp;', '').replace(':','').replace(',',';')
 							if cellValue != 'None': tattoos = cellValue
 					
 					#PIERCINGS
 					if cellName == 'Piercings':
 						for cell in row.findAll('td', {'class':'paramvalue'}):
-							cellValue = cell.text.replace('&nbsp;', '').replace(':','')						
+							cellValue = cell.text.replace('&nbsp;', '').replace(':','').replace(',',';')						
 							if cellValue != 'None': piercings = cellValue
 							
 					#ALIASES
 					if cellName == 'Aliases':
 						for cell in row.findAll('td', {'class':'paramvalue'}):
-							aliases = cell.text.replace('&nbsp;', '').replace(':','')						
+							aliases = cell.text.replace('&nbsp;', '').replace(':','').replace(',',';')						
 
 					#CAREER START-END
 					if cellName == 'Career Start And End':
@@ -216,7 +216,7 @@ with open('./Scraped.csv', 'wb') as csvfile:
 			unprocessedPornstars.append(pornstar +  ' [' + url + ']')
 
 		finally:
-			# if name != '': print 'Successfully scraped the following information for ' + name + '[' + url + ']'
+			if name != '': print 'Successfully scraped the following information for ' + name + '[' + url + ']'
 			# if dateofBirth != '': print '\t' + 'DoB::: ' + dateofBirth
 			# if weight != '': print '\t' + 'Weight::: ' + weight
 			# if height != '': print '\t' + 'Height::: ' + height
@@ -226,14 +226,17 @@ with open('./Scraped.csv', 'wb') as csvfile:
 			# if ethnicity != '': print '\t' + 'Ethnicity::: ' + ethnicity
 			# if hairColor != '': print '\t' + 'Hair Color::: ' + hairColor
 			# if eyeColor != '': print '\t' + 'Eye color::: ' + eyeColor
-			# if tattoos != '': print '\t' + 'Tattoos::: ' + tattoos
-			# if piercings != '': print '\t' + 'Piercings::: ' + piercings
-			# if aliases != '': print '\t' + 'Aliases::: ' + aliases
 			# if careerStartYear != '': print '\t' + 'Career Star Year::: ' + careerStartYear
 			# if careerEndYear != '': print '\t' + 'Career End Year::: ' + careerEndYear
+			# if aliases != '': print '\t' + 'Aliases::: ' + aliases
+			# if tattoos != '': print '\t' + 'Tattoos::: ' + tattoos
+			# if piercings != '': print '\t' + 'Piercings::: ' + piercings
+			# print ''
 			
-			print 'Writing... ' + name
-			csvWriter.writerow(['0'] + [name] + [str(date.today())] + [str(date.today())] + [str(date.today())] + [str(date.today())] + ['0'] + [dateofBirth] + ['0'] + ['0'] + ['0'] + [bustSize] + [hairColor] + ['-'] + ['Female'] + [eyeColor] + [ethnicity] + ['1'] + [buttSize] + [nationality] + [careerStartYear] + [careerEndYear] + [height] + [weight])		
+			if name != '':
+				print 'Writing... ' + name				
+				# csvWriter.writerow(['0'] + [name] + [str(date.today())] + [str(date.today())] + [str(date.today())] + [str(date.today())] + ['0'] + [dateofBirth] + ['0'] + ['0'] + ['0'] + [bustSize] + [hairColor] + ['-'] + ['Female'] + [eyeColor] + [ethnicity] + ['1'] + [buttSize] + [nationality] + [careerStartYear] + [careerEndYear] + [height] + [weight])		
+				csvWriter.writerow(['0'] + [name] + [''] + [''] + [''] + [''] + ['0'] + [dateofBirth] + ['0'] + ['0'] + ['0'] + [bustSize] + [hairColor] + [''] + ['Female'] + [eyeColor] + [ethnicity] + ['1'] + [buttSize] + [nationality] + [careerStartYear] + [careerEndYear] + [height] + [weight] + [aliases] + [tattoos] + [piercings])		
 
 if len(unprocessedPornstars) > 0:
 	print ''
